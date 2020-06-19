@@ -1,8 +1,8 @@
 <?php
-$servername = "localhost";
-$username = "root";
-$password = "";
-$db = "db_sig_covid19";
+$servername = "db4free.net";
+$username = "kertiw";
+$password = "123kerti";
+$db = "db_covid19_kerti";
 
 // Create connection
 $koneksi = new mysqli($servername, $username, $password, $db);
