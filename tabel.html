@@ -1,0 +1,365 @@
+<!doctype html>
+<html class="no-js" lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="x-ua-compatible" content="ie=edge">
+        <title>Data Sebaran Covid-19 - Bali</title>
+        <meta name="description" content="">
+        <meta name="keywords" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        
+        <link rel="icon" href="favicon.ico" type="image/x-icon" />
+
+        <link href="https://fonts.googleapis.com/css?family=Nunito+Sans:300,400,600,700,800" rel="stylesheet">
+        
+        <link rel="stylesheet" href="plugins/bootstrap/dist/css/bootstrap.min.css">
+        <link rel="stylesheet" href="plugins/fontawesome-free/css/all.min.css">
+        <link rel="stylesheet" href="plugins/ionicons/dist/css/ionicons.min.css">
+        <link rel="stylesheet" href="plugins/icon-kit/dist/css/iconkit.min.css">
+        <link rel="stylesheet" href="plugins/perfect-scrollbar/css/perfect-scrollbar.css">
+        <link rel="stylesheet" href="plugins/datatables.net-bs4/css/dataTables.bootstrap4.min.css">
+        <link rel="stylesheet" href="dist/css/theme.min.css">
+        <script src="src/js/vendor/modernizr-2.8.3.min.js"></script>
+    </head>
+
+    <body>
+        <!--[if lt IE 8]>
+            <p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
+        <![endif]-->
+
+        <header class="header-top" header-theme="light">
+               <div class="card">
+                <div class="card-header">
+                    <h3>Data COVID-19 di Bali</h3>
+                </div> 
+            </header>
+
+            <div class="wrapper">
+                <div class="main-content">
+                    <div class="container-fluid">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="card">
+                                    <div class="card-header">
+                                        <div class="col-sm-5">
+                                            <h3>Cari Data Berdasarkan Tanggal</h3>
+                                            <div class="input-group input-group-button">
+                                                <input type="date" class="form-control " id="tanggalTabel">
+                                                <div class="input-group-append">
+                                                    <button class="btn btn-primary" id="tangglButton" type="button">Find</button>
+                                                <pre>   </pre>
+                                                </div>
+                                                <div class="input-group-append">
+                                                    <button type="button" id="overide" class="btn btn-success btn-rounded">Override Data H-1</button>
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-12 col-lg-6">
+                                          <a href="index.html" class="btn btn-warning btn-lg btn-block">Kembali</a>
+                                    </div>
+                                </div>
+                                        </div>
+
+                                    </div>
+                                    <div class="card-body">
+                                        <div class="dt-responsive">
+                                            <center><h3 class="card-title" id="tglTampil"></h3></center>
+                                            <div id="tabel">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <footer class="footer">
+                    <p style="text-align:center"> Kerti Widyani - 1705551085 </p>
+                </footer>
+            </div>
+        </div>
+        
+        
+        <div class="modal fade apps-modal" id="appsModal" tabindex="-1" role="dialog" aria-labelledby="appsModalLabel" aria-hidden="true" data-backdrop="false">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><i class="ik ik-x-circle"></i></button>
+            <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content">
+                    <div class="quick-search">
+                        <div class="container">
+                            <div class="row">
+                                <div class="col-md-4 ml-auto mr-auto">
+                                    <div class="input-wrap">
+                                        <input type="text" id="quick-search" class="form-control" placeholder="Search..." />
+                                        <i class="ik ik-search"></i>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- MODAL EDIT -->
+        <div class="modal fade" id="modal-edit">
+          <div class="modal-dialog">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h4 class="modal-title">Edit Data</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+              <div class="modal-body">
+                <div class="col-lg-12">
+                  <div class="form-group">
+                    <label>Tanggal</label>
+                    <input name="tanggal" id="tanggal" type="date" disabled class="form-control" required>
+                  </div>
+                  <div class="form-group">
+                    <label>Kelurahan</label>
+                    <input name="kelurahanId" id="kelurahanId" type="text" disabled hidden class="form-control" required>
+                    <input name="kelurahan" id="kelurahan" type="text" disabled min="0" class="form-control" required>
+                  </div>
+                  <div class="form-group">
+                    <label>PPLN</label>
+                    <input name="ppln" id="ppln" type="number" min="0" class="form-control" required>
+                  </div>
+                  <div class="form-group">
+                    <label>PPDN</label>
+                    <input name="ppdn" id="ppdn" type="number" min="0" class="form-control" required>
+                  </div>
+                  <div class="form-group">
+                    <label>TL</label>
+                    <input name="tl" id="tl" type="number" min="0" class="form-control" required>
+                  </div>
+                  <div class="form-group">
+                    <label>Lainnya</label>
+                    <input name="lainnya" id="lainnya" type="number" min="0" class="form-control" required>
+                  </div>
+                  <div class="form-group">
+                    <label>Perawatan</label>
+                    <input name="perawatan" id="perawatan" type="number" min="0" class="form-control" required>
+                  </div>
+                  <div class="form-group">
+                    <label>Sembuh</label>
+                    <input name="sembuh" id="sembuh" type="number" min="0" class="form-control" required>
+                  </div>
+                  <div class="form-group">
+                    <label>Meninggal</label>
+                    <input name="meninggal" id="meninggal" type="number" min="0" class="form-control" required>
+                  </div>
+                </div>
+              </div>
+              <div class="modal-footer justify-content-between">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                <button type="button" id="simpanEdit" class="btn btn-primary">Simpan</button>
+              </div>
+              </form>
+            </div>
+            <!-- /.modal-content -->
+          </div>
+          <!-- /.modal-dialog -->
+        </div>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+        <script>window.jQuery || document.write('<script src="../src/js/vendor/jquery-3.3.1.min.js"><\/script>')</script>
+        <script src="plugins/popper.js/dist/umd/popper.min.js"></script>
+        <script src="plugins/bootstrap/dist/js/bootstrap.min.js"></script>
+        <script src="plugins/perfect-scrollbar/dist/perfect-scrollbar.min.js"></script>
+        <script src="plugins/screenfull/dist/screenfull.js"></script>
+        <script src="plugins/datatables.net/js/jquery.dataTables.min.js"></script>
+        <script src="plugins/datatables.net-bs4/js/dataTables.bootstrap4.min.js"></script>
+        <script src="dist/js/theme.min.js"></script>
+        <script src="js/datatables.js"></script>
+        <!-- Google Analytics: change UA-XXXXX-X to be your site's ID. -->
+        <script>
+            (function(b,o,i,l,e,r){b.GoogleAnalyticsObject=l;b[l]||(b[l]=
+            function(){(b[l].q=b[l].q||[]).push(arguments)});b[l].l=+new Date;
+            e=o.createElement(i);r=o.getElementsByTagName(i)[0];
+            e.src='https://www.google-analytics.com/analytics.js';
+            r.parentNode.insertBefore(e,r)}(window,document,'script','ga'));
+            ga('create','UA-XXXXX-X','auto');ga('send','pageview');
+        </script>
+        <script>
+        $(function () {
+            $("#example1").DataTable();
+            $('#example2').DataTable({
+              "paging": true,
+              "lengthChange": false,
+              "searching": false,
+              "ordering": true,
+              "info": true,
+              "autoWidth": false,
+            });
+        });
+
+        $(document).ready(function(){
+            var dataTabel=[];
+            var tanggal = tanggal = $('#tanggalTabel').val();
+            var tanggal = $('#tanggalTabel').val();
+                  
+            $('#tangglButton').click(function(e){
+                tanggal = $('#tanggalTabel').val();
+                loadData(tanggal);
+            });
+
+            $('#overide').click(function(e){
+              tanggal = $('#tanggalTabel').val();
+              dataId = 1;
+              $.ajax({
+                async:false,
+                url:'./action.php',
+                type:'get',
+                dataType:'json',
+                data:{"id": dataId, "tanggal":tanggal, "action": "add"},
+                success: function(response){
+                  loadData(response);
+                  alert("Data Berhasil Ditambahkan!");
+                }
+              }); 
+            });
+               
+            function loadData(tanggalData){
+              $.ajax({
+                async:false,
+                url: "./loadTabel.php",
+                type: "get",
+                dataType: 'json',
+                data:{"tgl": tanggalData},
+                success: function (response){
+                    buat_tabel(response, tanggalData)
+                } 
+            });  
+            }
+            
+            function buat_tabel(rows,tanggall){
+            // alert(rows)
+                const date = new Date(tanggall)
+                const dateTimeFormat = new Intl.DateTimeFormat('en', { year: 'numeric', month: 'short', day: '2-digit' }) 
+                const [{ value: month },,{ value: day },,{ value: year }] = dateTimeFormat .formatToParts(date ) 
+                var idData = null;
+                var html = '<table id="simpletable" class="table table-striped table-bordered nowrap">';
+                html += '<thead>';
+                html += '<tr>';
+
+                html += '<th><center>NO</center></th>';
+                for( var j in rows[0] ) {
+                    if (j == 0 || j == 1 || j == 2 || j == 3 || j == 4 || j==5 || j==6 || j==7 || j==8 || j=='id_data'){
+                            
+                    }else{
+                        if (j=="nama_kelurahan"){
+                            html += '<th><center>Nama Kelurahan</center></th>';  
+                        }else{
+                            html += '<th><center>' + j + '</center></th>';  
+                        }   
+                    }
+                }
+                html += '<th><center>ACTION</center></th>'
+                html += '</tr>';
+                html += '</thead>';
+                html += '<tbody>';
+                for( var i = 0; i < rows.length; i++) {
+                    html += '<tr>';
+                    html += '<td><center>' + parseInt(i+1) + '</center></td>'; 
+                    for( var j in rows[i] ) {
+                        if (j == 0 || j == 1 || j == 2 || j == 3 || j == 4 || j==5 || j==6 || j==7 || j==8){
+                                
+                        }else if (j=='id_data'){
+                            idData=rows[i][j];
+                        }else{
+                            if(j=='nama_kelurahan'){
+                                html += '<td>' + rows[i][j] + '</td>';  
+                            }else {
+                                html += '<td><center>' + rows[i][j] + '</center></td>';  
+                            }
+                        }
+                    }
+                    html +='<td>';
+                    html +='<center><button type="button" value="'+idData+'" class="btn btn-info">Edit</button>';
+                    html +='<button type="button" class="btn btn-danger" value="'+idData+'">Delete</button></center>';
+                    html +='</td>';
+                    html += '</tr>';
+                    }
+                html += '</table>';
+                document.getElementById("tglTampil").innerHTML="Tabel Penyebaran Tanggal "+`${day} ${month} ${year }`;
+                document.getElementById('tabel').innerHTML = html;
+                $("#simpletable").DataTable({
+                  "paging": true,
+                  "lengthChange": true,
+                  "searching": true,
+                  "ordering": true,
+                  "info": true,
+                  "autoWidth": true,
+                  "responsive": true,
+                });
+
+
+            }
+
+            $(document).on('click','.btn-danger', function() {
+                var dataId = $(this).val();
+                $.ajax({
+                    async:false,
+                    type: 'get',
+                    url: './action.php',
+                    dataType: 'json',
+                    data: {"id": dataId, "tanggal": tanggal, "action": 'delete'},
+                    success: function(response){
+                       loadData(response[0][0]);
+                       alert("Data Berhasil Dihapus!!!");
+                    }
+                });
+            });
+
+            $(document).on('click','.btn-dark',function(){
+                var dataId = $(this).val();
+                $.ajax({
+                    async:false,
+                    type: 'get',
+                    url: './action.php',
+                    dataType: 'json',
+                    data: {"id": dataId,"tanggal": tanggal, "action": 'getedit'},
+                    success: function(response){
+                       $('#tanggal').val(response[0].tanggal);
+                        $('#kelurahan').val(response[0].nama_kelurahan);
+                        $('#kelurahanId').val(response[0].id_kelurahan);
+                        $('#ppln').val(response[0].PPLN);
+                        $('#ppdn').val(response[0].PPDN);
+                        $('#tl').val(response[0].TL);
+                        $('#lainnya').val(response[0].Lainnya);
+                        $('#perawatan').val(response[0].Perawatan);
+                        $('#sembuh').val(response[0].Sembuh);
+                        $('#meninggal').val(response[0].Meninggal);
+                        $('#simpanEdit').val(dataId);
+                       $('#modal-edit').modal('show');
+                    }
+                });
+              });
+
+            $('#simpanEdit').click(function(e){
+                dataId = $('#simpanEdit').val();
+                tanggal = $('#tanggal').val();
+                ppln = $('#ppln').val();
+                ppdn = $('#ppdn').val();
+                tl = $('#tl').val();
+                lainnya = $('#lainnya').val();
+                perawatan = $('#perawatan').val();
+                sembuh = $('#sembuh').val();
+                meninggal = $('#meninggal').val();
+                $.ajax({
+                    async:false,
+                    type: 'get',
+                    url: './edit.php',
+                    dataType: 'json',
+                    data: {"id": dataId, "tanggal": tanggal, "ppln": ppln, "ppdn": ppdn, "tl": tl, "lainnya": lainnya, "perawatan": perawatan, "sembuh": sembuh, "meninggal": meninggal},
+                    success: function(response){
+                        $('#modal-edit').modal('toggle');
+                        loadData(response[0][0]);
+                        alert("Data Berhasil Disimpan!!");
+                    }
+                });
+
+                
+            });
+            loadData(tanggal);
+            });
+        </script>
+    </body>
+</html>

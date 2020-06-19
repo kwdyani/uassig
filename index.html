@@ -1,0 +1,332 @@
+<!doctype html>
+<html class="no-js" lang="en">
+    <head>
+        <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta http-equiv="x-ua-compatible" content="ie=edge">
+        <title>Data COVID19 Bali</title>
+        <meta name="description" content="">
+        <meta name="keywords" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta http-equiv="cache-control" content="no-cache" />
+        <meta http-equiv="Pragma" content="no-cache" />
+        <!-- Leaflet (JS/CSS) -->
+        <link rel="stylesheet" href="https://unpkg.com/leaflet@1.3.4/dist/leaflet.css">
+        <script src="https://unpkg.com/leaflet@1.3.4/dist/leaflet.js"></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+
+        <link href="https://fonts.googleapis.com/css?family=Nunito+Sans:300,400,600,700,800" rel="stylesheet">
+        
+        <link rel="stylesheet" href="plugins/bootstrap/dist/css/bootstrap.min.css">
+        <link rel="stylesheet" href="plugins/fontawesome-free/css/all.min.css">
+        <link rel="stylesheet" href="plugins/icon-kit/dist/css/iconkit.min.css">
+        <link rel="stylesheet" href="plugins/ionicons/dist/css/ionicons.min.css">
+        <link rel="stylesheet" href="plugins/perfect-scrollbar/css/perfect-scrollbar.css">
+        <link rel="stylesheet" href="plugins/datatables.net-bs4/css/dataTables.bootstrap4.min.css">
+        <link rel="stylesheet" href="plugins/jvectormap/jquery-jvectormap.css">
+        <link rel="stylesheet" href="plugins/tempusdominus-bootstrap-4/build/css/tempusdominus-bootstrap-4.min.css">
+        <link rel="stylesheet" href="plugins/weather-icons/css/weather-icons.min.css">
+        <link rel="stylesheet" href="plugins/c3/c3.min.css">
+        <link rel="stylesheet" href="plugins/jquery-minicolors/jquery.minicolors.css">
+        <link rel="stylesheet" href="plugins/owl.carousel/dist/assets/owl.carousel.min.css">
+        <link rel="stylesheet" href="plugins/owl.carousel/dist/assets/owl.theme.default.min.css">
+        <link rel="stylesheet" href="../plugins/datedropper/datedropper.min.css">
+        <link rel="stylesheet" href="dist/css/theme.min.css">
+        <script src="src/js/vendor/modernizr-2.8.3.min.js"></script>
+        <script src="https://unpkg.com/leaflet-kmz@0.3.0/dist/leaflet-kmz.js"></script>
+        <style>
+        html,
+        body,
+        .map {
+            margin: 0;
+            padding: 0;
+            width: 100%;
+            height: 100%;
+        }
+    </style>
+
+    <body>
+        
+            <header class="header-top" header-theme="light">
+               <div class="card">
+                <div class="card-header">
+                    <h3>Data COVID-19 di Bali</h3>
+                </div> 
+            </header>
+
+        <div class="wrapper">
+            <div class="main-content">
+                <div class="container-fluid">
+                    <div class="row clearfix">
+                        <div class="col-lg-3 col-md-6 col-sm-12">
+                            <div class="widget">
+                                <div class="widget-body">
+                                    <div class="d-flex justify-content-between align-items-center">
+                                        <div class="state">
+                                            <h6>Positif</h6>
+                                            <h2 id="jumPositif"></h2>
+                                        </div>
+                                    </div>
+                                        <small class="text-small mt-10 d-block"></small>
+                                    </div>
+                                    <div class="progress progress-sm">
+                                        <div class="progress-bar bg-danger" role="progressbar" aria-valuenow="62" aria-valuemin="0" aria-valuemax="100" style="width: 62%;"></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-3 col-md-6 col-sm-12">
+                                <div class="widget">
+                                    <div class="widget-body">
+                                        <div class="d-flex justify-content-between align-items-center">
+                                            <div class="state">
+                                                <h6>Sembuh</h6>
+                                                <h2 id="jumSembuh"></h2>
+                                            </div>
+                                            
+                                        </div>
+                                        <small class="text-small mt-10 d-block"></small>
+                                    </div>
+                                    <div class="progress progress-sm">
+                                        <div class="progress-bar bg-success" role="progressbar" aria-valuenow="78" aria-valuemin="0" aria-valuemax="100" style="width: 78%;"></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-3 col-md-6 col-sm-12">
+                                <div class="widget">
+                                    <div class="widget-body">
+                                        <div class="d-flex justify-content-between align-items-center">
+                                            <div class="state">
+                                                <h6>Dirawat</h6>
+                                                <h2 id="jumDirawat"></h2>
+                                            </div>
+                                            
+                                        </div>
+                                        <small class="text-small mt-10 d-block"></small>
+                                    </div>
+                                    <div class="progress progress-sm">
+                                        <div class="progress-bar bg-warning" role="progressbar" aria-valuenow="31" aria-valuemin="0" aria-valuemax="100" style="width: 31%;"></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-3 col-md-6 col-sm-12">
+                                <div class="widget">
+                                    <div class="widget-body">
+                                        <div class="d-flex justify-content-between align-items-center">
+                                            <div class="state">
+                                                <h6>Meninggal</h6>
+                                                <h2 id="jumMeninggal"></h2>
+                                            </div>
+                                            
+                                        </div>
+                                        <small class="text-small mt-10 d-block"></small>
+                                    </div>
+                                    <div class="progress progress-sm">
+                                        <div class="progress-bar bg-info" role="progressbar" aria-valuenow="20" aria-valuemin="0" aria-valuemax="100" style="width: 20%;"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                        <div class="card-body">
+                            <div class="row mb-20">
+                                <div class="col-sm-12 col-lg-6">
+                                    <h4 class="sub-title">Cari Data Berdasarkan Tanggal</h4>
+                                    <div class="row">
+                                        <div class="col-sm-12">
+                                            <div class="input-group input-group-button">
+                                                <input type="date" class="form-control " id="tanggalSearch">
+                                                <div class="input-group-append">
+                                                    <button class="btn btn-primary" id="tanggalBtn" type="button">Submit</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-sm-12 col-lg-6">
+                                    <h4 class="sub-title">Tabel Data</h4>
+                                    <div class="row mb-30">
+                                          <a style="height:50%; width: 100%" href="tabel.html" class="btn btn-info btn-lg btn-block">Lihat Tabel Data</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                 <div class="row">
+                    <div class="col-md-12">
+                        <div class="card">
+                            <div class="card-body">
+                                <div class="row align-items-center">
+                                    <div class="col-lg-8 col-md-12">
+                                        <h3 class="card-title" id="tglNow"></h3>
+                                        <div id="map" style="height:600px; width : 1310px"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <footer class="footer">
+                    <p style="text-align:center"> Kerti Widyani - 1705551085 </p>
+                </footer>
+            </div>
+        </div>
+        <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+        <script>window.jQuery || document.write('<script src="src/js/vendor/jquery-3.3.1.min.js"><\/script>')</script>
+        <script src="plugins/popper.js/dist/umd/popper.min.js"></script>
+        <script src="plugins/bootstrap/dist/js/bootstrap.min.js"></script>
+        <script src="plugins/perfect-scrollbar/dist/perfect-scrollbar.min.js"></script>
+        <script src="plugins/screenfull/dist/screenfull.js"></script>
+        <script src="plugins/datatables.net/js/jquery.dataTables.min.js"></script>
+        <script src="plugins/datatables.net-bs4/js/dataTables.bootstrap4.min.js"></script>
+        <script src="plugins/datatables.net-responsive/js/dataTables.responsive.min.js"></script>
+        <script src="plugins/datatables.net-responsive-bs4/js/responsive.bootstrap4.min.js"></script>
+        <script src="plugins/jvectormap/jquery-jvectormap.min.js"></script>
+        <script src="plugins/jvectormap/tests/assets/jquery-jvectormap-world-mill-en.js"></script>
+        <script src="plugins/moment/moment.js"></script>
+        <script src="plugins/jquery-minicolors/jquery.minicolors.min.js"></script>
+        <script src="plugins/tempusdominus-bootstrap-4/build/js/tempusdominus-bootstrap-4.min.js"></script>
+        <script src="plugins/datedropper/datedropper.min.js"></script>
+        <script src="plugins/d3/dist/d3.min.js"></script>
+        <script src="plugins/c3/c3.min.js"></script>
+        <script src="js/tables.js"></script>
+        <script src="js/widgets.js"></script>
+        <script src="js/charts.js"></script>
+        <script src="dist/js/theme.min.js"></script>
+        <script src="js/form-picker.js"></script>
+
+        <!-- Google Analytics: change UA-XXXXX-X to be your site's ID. -->
+
+       <script>
+
+        $(document).ready(function(){
+            var allData = null;
+            var tanggal = $('#tanggalSearch').val();
+            var colorStart = $('#colorStart').val();
+            var colorEnd = $('#colorEnd').val();
+            var map = null;
+            var control=null;
+            var kelurahanData=null;
+
+            $('#tanggalBtn').click(function(e){
+                tanggal = $('#tanggalSearch').val();
+                map.remove();
+                addMap();
+                getDataKelurahan();
+                getDataAll();
+                reload();
+            });
+
+            // $('#btnGenerateColor').click(function(e){
+            //     colorStart = $('#colorStart').val();
+            //     colorEnd = $('#colorEnd').val();
+            //     map.remove();
+            //     addMap();
+            //     reload();
+            // });
+
+            function getDataAll(){
+                $.ajax({
+                    async:false,
+                    url: "./getData.php",
+                    type: "get",
+                    dataType: 'json',
+                    data:{"tgl": tanggal},
+                    success: function (response){
+                        allData = response;
+                        } 
+                });
+                console.log(allData);
+            }
+
+            function addMap(){
+                map = L.map('map');
+                map.setView(new L.LatLng(-8.4560705, 115.1118982), 10);
+                var OpenTopoMap = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                    maxZoom: 19,
+                    attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
+                    opacity: 0.90
+                }).addTo(map);;
+            }
+
+            function getDataKelurahan(){
+                var hasil;
+                $.ajax({
+                    async:false,
+                    url: "./getDataKelurahan.php",
+                    type: "get",
+                    dataType: 'json',
+                    data:{"tgl": tanggal},
+                    success: function (response){
+                        kelurahanData = response;
+                        } 
+                    });
+                console.log(kelurahanData);
+            }
+
+
+            function reload(){
+                // Instantiate KMZ parser (async)
+                var kmzParser = new L.KMZParser({
+                    onKMZLoaded: function(layer, name) {
+                    // add layer to layer control
+                    control.addOverlay(layer, name);
+                    // get all sub layer on kmz_layers
+                    var layerData = layer.getLayers()[0].getLayers();
+                    // fetching data sub layer
+                        layerData.forEach(function(data, index){
+                            // ambil data sub layer
+                            var negara = data.feature.properties.NAME_0;
+                            var provinsi = data.feature.properties.NAME_1;
+                            var kabupaten  = data.feature.properties.NAME_2;
+                            var kecamatan  = data.feature.properties.NAME_3;
+                            var kelurahan  = data.feature.properties.NAME_4;
+
+                            var dataKelurahan = kelurahanData[index]
+                            var hijauMuda = parseInt(dataKelurahan.PPLN) + parseInt(dataKelurahan.PPDN)+parseInt(dataKelurahan.TL) + parseInt(dataKelurahan.Lainnya);
+                            var hijauTua = parseInt(dataKelurahan.PPLN) + parseInt(dataKelurahan.PPDN)+parseInt(dataKelurahan.TL)+parseInt(dataKelurahan.Lainnya) - parseInt(dataKelurahan.Sembuh) + parseInt(dataKelurahan.Meninggal);
+                            var kuning = parseInt(dataKelurahan.PPLN) + parseInt(dataKelurahan.PPDN);
+                            var merahMuda = parseInt(dataKelurahan.PPLN) + parseInt(dataKelurahan.PPDN);
+                            var merahTua = parseInt(dataKelurahan.TL);
+                            //Ganti warna Layer
+                            if(hijauMuda == 0){
+                                data.setStyle({fillOpacity:'0.7',fillColor: '#00ff00'});
+                            }else if(hijauTua == 0){
+                                data.setStyle({fillOpacity:'0.7',fillColor: '#007a00'});
+                            }else if(kuning == 1){
+                                data.setStyle({fillOpacity:'0.7',fillColor: '#f8ff11'});
+                            }else if(merahMuda > 1){
+                                data.setStyle({fillOpacity:'0.7',fillColor: '#ff4d40'});
+                            }else if(merahTua > 0){
+                                data.setStyle({fillOpacity:'0.7',fillColor: '#cf1300'});
+                            }
+                            //Deskripsi 
+                            data.bindPopup('<h6><b>Kabupaten/Kota : <a>'+kelurahan+
+                                '</b></a> <br><font color="#FF0000">Positif Covid-19: <a>'+hijauMuda+'</a></font> <br><font color="#00FF40">Pasien Sembuh:  <a>'+dataKelurahan.Sembuh+'</a></font> <br><font color="#0000FF">Pasien Dirawat: '+dataKelurahan.Perawatan+'</a></font><br>Pasien Meninggal:'+dataKelurahan.Meninggal+'</h6>');
+
+                        });
+                    layer.addTo(map);               
+                    }
+                });
+            kmzParser.load('bali-kelurahan.kmz');
+            control = L.control.layers(null, null, { collapsed:false }).addTo(map);
+            // Add remote KMZ files as layers (NB if they are 3rd-party servers, they MUST have CORS enabled)
+            document.getElementById("jumPositif").innerHTML =allData[0].jumPositif;
+            document.getElementById("jumSembuh").innerHTML =allData[0].jumSembuh;
+            document.getElementById("jumDirawat").innerHTML =allData[0].jumDirawat;
+            document.getElementById("jumMeninggal").innerHTML =allData[0].jumMeninggal;
+
+            const date = new Date(allData[0].tanggal);
+            const dateTimeFormat = new Intl.DateTimeFormat('en', { year: 'numeric', month: 'short', day: '2-digit' }) 
+            const [{ value: month },,{ value: day },,{ value: year }] = dateTimeFormat .formatToParts(date )
+            document.getElementById("tglNow").innerHTML ="Pemetaan COVID-19 di Bali " + `${day} ${month} ${year }`;
+            }
+                    
+            addMap();
+            getDataKelurahan();
+            getDataAll();
+            reload();
+            
+        });
+        </script>
+    </body>
+</html>
